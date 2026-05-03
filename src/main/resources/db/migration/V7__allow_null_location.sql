@@ -1,0 +1,2 @@
+ALTER TABLE work_orders
+CHANGE collection_point_id collection_point_id BIGINT NULL;
