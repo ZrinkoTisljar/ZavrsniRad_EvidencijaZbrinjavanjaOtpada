@@ -23,7 +23,7 @@ public class WasteManifestPdfService {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-            // Podesili smo margine
+            // Podešavanje margina
             Document document = new Document(PageSize.A4, 40, 40, 40, 40);
             PdfWriter.getInstance(document, out);
 
@@ -48,7 +48,21 @@ public class WasteManifestPdfService {
             PdfPTable tableA = createSectionTable("A. POŠILJKA OTPADA");
             addCell(tableA, "Ključni broj otpada:", wm.getWorkOrder().getWasteType().getCode(), normalFont);
             addCell(tableA, "Naziv otpada:", wm.getWorkOrder().getWasteType().getName(), normalFont);
-            addCell(tableA, "Procijenjena količina:", wm.getWorkOrder().getQuantity().toString() + " " + wm.getWorkOrder().getUnit().name(), normalFont);
+
+          // Uklanja nepotrebne nule na kraju decimalnog broja
+            String formattedQuantity = wm.getWorkOrder()
+                    .getQuantity()
+                    .stripTrailingZeros()
+                    .toPlainString();
+
+            addCell(
+                    tableA,
+                    "Procijenjena količina:",
+                    formattedQuantity + " " + wm.getWorkOrder().getUnit().name(),
+                    normalFont
+            );
+
+           // addCell(tableA, "Procijenjena količina:", wm.getWorkOrder().getQuantity().toString() + " " + wm.getWorkOrder().getUnit().name(), normalFont);
             addCell(tableA, "Napomena / Opis:", wm.getNote() != null ? wm.getNote() : "-", normalFont);//
             document.add(tableA);
 
