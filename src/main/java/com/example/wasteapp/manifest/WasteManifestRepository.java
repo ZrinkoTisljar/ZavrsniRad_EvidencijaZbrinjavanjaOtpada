@@ -19,7 +19,7 @@ public interface WasteManifestRepository extends JpaRepository<WasteManifest,Lon
 
     /**
      * USER sigurnost:
-     * Pronađi manifest samo ako pripada korisniku s tim emailom.
+     * Pronađi prateći list samo ako pripada korisniku s tim emailom.
      */
     Optional<WasteManifest> findByIdAndWorkOrderUserEmail(Long id, String email);
 
